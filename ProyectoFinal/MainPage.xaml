@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFinal.MainPage"
+             Title="STREAMING">
+
+    <ScrollView>
+        <StackLayout Padding="10">
+            <!-- Categorías -->
+            <CollectionView x:Name="categoriesCollection" ItemsLayout="HorizontalList">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout HorizontalOptions="FillAndExpand">
+                            <Image Source="{Binding Image}" HeightRequest="100">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference categoriesCollection}, Path=BindingContext.CategoryTappedCommand}" CommandParameter="{Binding .}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding Name}" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Lista de canales -->
+            <Label Text="Lista de canales" FontSize="Medium" Margin="0,20,0,10" />
+
+            <CollectionView x:Name="channelsCollection">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="3"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout HorizontalOptions="FillAndExpand">
+                            <Image Source="{Binding Image}" HeightRequest="100">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference channelsCollection}, Path=BindingContext.ChannelTappedCommand}" CommandParameter="{Binding .}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding Name}" HorizontalOptions="Center" />
+                            <Label Text="{Binding Price}" HorizontalOptions="Center" />
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

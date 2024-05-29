@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProyectoFinal.Views.Paquetes"
+             Title="Paquetes">
+    
+    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,20,0,0">
+        <StackLayout HorizontalOptions="FillAndExpand">
+            <Image Source="dotnet_bot.png" HeightRequest="100"/>
+            <Label Text="Paquete de Fútbol" HorizontalOptions="Center"/>
+            <Label Text="Cantidad de canales : 7 canales" HorizontalOptions="Center"/>
+            <Label Text="Precio: $22.000" HorizontalOptions="Center"/>
+            <Button Text="Comprar"/>
+
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <Label Text="WIN SPORT" HorizontalOptions="Center"/>
+                <Label Text="ESPN" HorizontalOptions="Center"/>
+                <Label Text="ESPN 2" HorizontalOptions="Center"/>
+                <Label Text="ESPN 3" HorizontalOptions="Center"/>
+                <Label Text="ESPN Sport" HorizontalOptions="Center"/>
+                <Label Text="EStar plus" HorizontalOptions="Center"/>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
