@@ -38,9 +38,9 @@ namespace ProyectoFinal
             // Inicializar las colecciones
             Categories = new ObservableCollection<CategoryItem>
             {
-                new CategoryItem { Name = "Página de Fútbol", Image = "dotnet_bot.png" },
-                new CategoryItem { Name = "Página de Kid", Image = "dotnet_bot.png" },
-                new CategoryItem { Name = "Página de Novela", Image = "dotnet_bot.png" }
+                //new CategoryItem { Name = "Página de Fútbol", Image = "dotnet_bot.png" },
+                //new CategoryItem { Name = "Página de Kid", Image = "dotnet_bot.png" },
+                //new CategoryItem { Name = "Página de Novela", Image = "dotnet_bot.png" }
             };
 
             Channels = new ObservableCollection<ChannelItem>
@@ -165,7 +165,54 @@ namespace ProyectoFinal
             }
         }
 
-       
+        private async Task LoadPackagesFromApi()
+        {
+            // URL de tu API
+            string apiUrl = EnviromentVariables.apiBaseURL + "/api/packages";
+            Console.WriteLine(apiUrl);
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string bearerToken = Preferences.Get("Token", string.Empty);
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    response.EnsureSuccessStatusCode();
+
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine("API Response: " + jsonResponse);
+                    using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
+                    {
+                        JsonElement root = doc.RootElement.GetProperty("data");
+                        foreach (JsonElement channelElement in root.EnumerateArray())
+                        {
+                            int id = channelElement.GetProperty("id").GetInt32();
+                            string name = channelElement.GetProperty("name").GetString();
+                            string url = channelElement.GetProperty("URL").GetString();
+                            string logo = channelElement.GetProperty("logoURL").GetString();
+                            int price = channelElement.GetProperty("price").GetInt32();
+                            Console.WriteLine("hola");
+                            Console.WriteLine(name);
+                            Channels.Add(new ChannelItem
+                            {
+                                Id = id,
+                                Name = name,
+                                URL = url,
+                                Image = logo,
+                                Price = price
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores de la API
+                await DisplayAlert("Error", $"No se pudieron cargar los canales: {ex.Message}", "OK");
+            }
+        }
+
+
 
         private async void Close_Clicked(object sender, EventArgs e)
         {
