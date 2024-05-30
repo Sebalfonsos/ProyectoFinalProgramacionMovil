@@ -1,7 +1,9 @@
 ﻿
+using Microsoft.Maui.ApplicationModel.Communication;
 using ProyectoFinal.Views;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Windows.Input;
 
@@ -74,7 +76,44 @@ namespace ProyectoFinal
         {
             // Manejar el evento de tap en el canal
             //DisplayAlert("Canal Tapped", $"Seleccionaste el canal: {channel.Name} con precio {channel.Price}", "OK");
-            await Navigation.PushAsync(new ViewChannel(channel));
+
+            var data = new
+            {
+                channel_id = channel.Id
+            };
+
+            var parametrosJson = JsonSerializer.Serialize(data);
+            var parametros = new StringContent(parametrosJson, Encoding.UTF8, "application/json");
+
+            string apiUrl = EnviromentVariables.apiBaseURL + "/api/hasChannelBought";
+
+            HttpClient client = new HttpClient();
+            string bearerToken = Preferences.Get("Token", string.Empty);
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", bearerToken);
+            HttpResponseMessage response = await client.PostAsync(apiUrl, parametros);
+            response.EnsureSuccessStatusCode();
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.WriteLine("API Response: " + jsonResponse);
+
+            var responseObject = JsonSerializer.Deserialize<JsonDocument>(jsonResponse);
+
+            bool success = responseObject.RootElement.GetProperty("success").GetBoolean();
+            bool bought = responseObject.RootElement.GetProperty("bought").GetBoolean();
+            int userId = responseObject.RootElement.GetProperty("userId").GetInt32();
+
+            if (success)
+            {
+                if (bought)
+                {
+                    await Navigation.PushAsync(new ViewChannel(channel));
+                }
+                else
+                {
+                    await Navigation.PushAsync(new Canal(channel));
+                }
+            }
+
         }
 
   
@@ -100,6 +139,7 @@ namespace ProyectoFinal
                         JsonElement root = doc.RootElement.GetProperty("data");
                         foreach (JsonElement channelElement in root.EnumerateArray())
                         {
+                            int id = channelElement.GetProperty("id").GetInt32();
                             string name = channelElement.GetProperty("name").GetString();
                             string url = channelElement.GetProperty("URL").GetString();
                             string logo = channelElement.GetProperty("logoURL").GetString();
@@ -108,10 +148,11 @@ namespace ProyectoFinal
                             Console.WriteLine(name);
                             Channels.Add(new ChannelItem
                             {
+                                Id = id,
                                 Name = name,
                                 URL = url,
                                 Image = logo,
-                                Price = price.ToString("C")  // Formatear como moneda
+                                Price = price 
                             });
                         }
                     }

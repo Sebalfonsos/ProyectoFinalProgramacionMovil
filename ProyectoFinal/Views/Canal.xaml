@@ -6,10 +6,10 @@
     
     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,20,0,0">
         <StackLayout HorizontalOptions="FillAndExpand">
-            <Image Source="dotnet_bot.png" HeightRequest="100"/>
-            <Label Text="Canal WIN Sport" HorizontalOptions="Center"/>
-            <Label Text="Precio: $10.000" HorizontalOptions="Center"/>
-            <Button Text="Comprar"/>
+            <Image x:Name="imagenCanal" HeightRequest="100"/>
+            <Label x:Name="nombreCanal" HorizontalOptions="Center"/>
+            <Label x:Name="precioCanal" HorizontalOptions="Center"/>
+            <Button x:Name="btnComprar" Text="Comprar" Clicked="btnComprar_Clicked"/>
         </StackLayout>
     </StackLayout>
 
