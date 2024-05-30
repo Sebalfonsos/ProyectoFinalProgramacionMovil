@@ -4,9 +4,9 @@
              x:Class="ProyectoFinal.Login"
              Title="Login">
     <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <!--<ActivityIndicator x:Name="indicadorCargando" IsVisible="True" IsRunning="True" Color="Blue" />-->
+        <ActivityIndicator x:Name="indicadorCargando" IsVisible="True" IsRunning="True" Color="Blue" />
 
-        <ScrollView x:Name="vistaLogin" IsVisible="True">
+        <ScrollView x:Name="vistaLogin" IsVisible="False">
             <VerticalStackLayout Padding="30,0" Spacing="25" BackgroundColor="White">
                 <Image Source="login.png" HeightRequest="100" Aspect="AspectFit"/>
 

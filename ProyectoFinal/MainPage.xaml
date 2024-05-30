@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProyectoFinal.MainPage"
              Title="STREAMING">
-
+    <RefreshView x:Name="refreshView">
+        
+  
     <ScrollView>
+       
         <StackLayout Padding="10">
             <!-- Categorías -->
+            <Button x:Name="Close" Text="Close Sesion" Clicked="Close_Clicked"/>
             <CollectionView x:Name="categoriesCollection" ItemsLayout="HorizontalList">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -46,5 +50,5 @@
 
         </StackLayout>
     </ScrollView>
-
+    </RefreshView>
 </ContentPage>

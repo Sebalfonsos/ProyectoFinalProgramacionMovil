@@ -4,10 +4,12 @@ namespace ProyectoFinal.Views;
 
 public partial class ViewChannel : ContentPage
 {
-	public ViewChannel()
+	public ViewChannel(ChannelItem channel)
 	{
 		InitializeComponent();
-	}
+        mediaElement.Source = channel.URL;
+
+    }
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
