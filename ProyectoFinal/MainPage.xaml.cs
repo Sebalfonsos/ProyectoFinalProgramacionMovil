@@ -48,10 +48,11 @@ namespace ProyectoFinal
             DisplayAlert("Categoría Tapped", $"Seleccionaste la categoría: {category.Name}", "OK");
         }
 
-        private void OnChannelTapped(ChannelItem channel)
+        private async void OnChannelTapped(ChannelItem channel)
         {
             // Manejar el evento de tap en el canal
-            DisplayAlert("Canal Tapped", $"Seleccionaste el canal: {channel.Name} con precio {channel.Price}", "OK");
+            //DisplayAlert("Canal Tapped", $"Seleccionaste el canal: {channel.Name} con precio {channel.Price}", "OK");
+            await Navigation.PushAsync(new ViewChannel());
         }
 
         private async void OnFutbolTapped(object sender, EventArgs e)
